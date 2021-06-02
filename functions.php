@@ -13,11 +13,30 @@ function pdo_connect_mysql() {
     }
     return $pdo;
 }
-
+/* DOESNT WORK BECAUSE MY SMTP CONF */
+// Send ticket email function
+function send_ticket_email($email, $id, $title, $msg, $priority, $category, $private, $status, $type = 'create') {
+    // Ticket create subject
+    $subject = 'Your ticket has been created';
+    // Ticket update subject
+    $subject = $type == 'update' ? 'Your ticket has been updated' : $subject;
+    // Ticket comment subject
+    $subject = $type == 'comment' ? 'Someone has commented on your ticket' : $subject;
+    // Mail headers
+    $headers = 'From: ' . mail_from . "\r\n" . 'Reply-To: ' . mail_from . "\r\n" . 'Return-Path: ' . mail_from . "\r\n" . 'X-Mailer: PHP/' . phpversion() . "\r\n" . 'MIME-Version: 1.0' . "\r\n" . 'Content-Type: text/html; charset=UTF-8' . "\r\n";
+    // Ticket URL
+    $link = view_ticket_link . '?id=' . $id . '&code=' . md5($id . $email);
+    // Include the ticket email template as a string
+    ob_start();
+    include 'ticket-email-template.php';
+    $ticket_email_template = ob_get_clean();
+    // Send ticket email
+    mail($email, $subject, $ticket_email_template, $headers);
+}
 // Template header, feel free to customize this
 function template_header($title) {
 $login_link = isset($_SESSION['account_loggedin']) ? '<a href="logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>' : '<a href="login.php"><i class="fas fa-lock"></i>Login</a>';
-$admin_link = isset($_SESSION['account_loggedin']) && $_SESSION['account_role'] == 'Admin' ? '<a href="admin/index.php" target="_blank"><i class="fas fa-cog"></i>Admin</a>' : '';
+$admin_link = isset($_SESSION['account_loggedin']) && $_SESSION['account_role'] == 'Admin' ? '<a href="admin/index.php""><i class="fas fa-cog"></i>Admin</a>' : '';
 echo <<<EOT
 <!DOCTYPE html>
 <html>
@@ -32,7 +51,7 @@ echo <<<EOT
     <nav class="navtop">
         <div>
             <h1><a href="index.php">M120 Jira</a></h1>
-            <a href="create.php"><i class="fas fa-plus"></i>Create Ticket</a>
+            <a href="create.php"><i class="fas fa-plus-circle"></i>Create Ticket</a>
             <a href="tickets.php"><i class="fas fa-ticket-alt"></i>Tickets</a>
             $admin_link
             $login_link
@@ -80,6 +99,7 @@ echo <<<EOT
                 </a>
                 <div class="space-between"></div>
                 <a href="about.php" class="right"><i class="fas fa-question-circle"></i></a>
+                <a href="../index.php" class="right"><i class="fas fa-home"></i></a>
                 <a href="logout.php" class="right"><i class="fas fa-sign-out-alt"></i></a>
             </header>
 EOT;
