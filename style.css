@@ -287,12 +287,12 @@ body {
   padding: 5px 10px;
   margin-left: 10px;
   font-weight: 600;
-  background-color: #f2f2f2;
-  color: #999999;
+  background-color: #213970;
+  color: #fff;
 }
 
 .tickets .pagination a:hover, .home .pagination a:hover {
-  background-color: #ebebeb;
+  background-color: #396fa6;
 }
 
 .view h2 span {
