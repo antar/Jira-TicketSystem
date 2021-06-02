@@ -1,6 +1,6 @@
 # M120-Jira-TicketSystem
 
-This application should represent a ticket system. Two types of roles can be assigned in the system. Admin and user roles. Admins can assign tickets. Members can enter tickets and enter comments.
+This application should represent a ticket system. Two types of roles can be assigned in the system. Admin and user roles. Admins can assign tickets. Members can enter tickets and enter comments. Projekt Live on: https://jira.wes.fm/
 
 
 ### Installation
