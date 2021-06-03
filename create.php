@@ -51,7 +51,7 @@ if (isset($_POST['title'], $_POST['msg'], $_POST['priority'], $_POST['category']
             $category_name = $c['id'] == $_POST['category'] ? $c['name'] : $category_name;
         }
         // Send the ticket email to the user
-        send_ticket_email($email, $ticket_id, $_POST['title'], $_POST['msg'], $_POST['priority'], $category_name, $_POST['private'], 'open');
+        //send_ticket_email($email, $ticket_id, $_POST['title'], $_POST['msg'], $_POST['priority'], $category_name, $_POST['private'], 'open');
         // Redirect to the view ticket page, the user should see their created ticket on this page
         header('Location: view.php?id=' . $ticket_id . ($_POST['private'] ? '&code=' . md5($ticket_id . $email) : ''));
     }
