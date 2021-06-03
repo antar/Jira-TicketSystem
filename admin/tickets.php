@@ -54,7 +54,7 @@ $tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 					</td>
 					<td class="responsive-hidden"><?=date('F j, Y H:ia', strtotime($ticket['created']))?></td>
 					<td>
-						<a href="../view.php?id=<?=$ticket['id']?>" target="_blank">View</a>
+						<a href="../view.php?id=<?=$ticket['id']?>" target="_self">View</a>
 						<a href="ticket.php?id=<?=$ticket['id']?>">Edit</a>
 					</td>
 				</tr>
