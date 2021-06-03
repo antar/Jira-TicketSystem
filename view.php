@@ -20,7 +20,12 @@ if (!$ticket) {
 }
 // Check if private
 if ($ticket['private'] && (!isset($_GET['code']) || $_GET['code'] != md5($ticket['id'] . $ticket['email']))) {
-    exit('This is a private ticket!');
+    ?>
+    <script>
+        alert("This ticket is private. Only the creator can see it.");
+        location.replace("./admin/tickets.php")
+    </script>
+    <?php
 }
 // If the ticket is private, append the code to the URL
 $private_url = $ticket['private'] ? '&code=' . md5($ticket['id'] . $ticket['email']) : '';
@@ -80,7 +85,7 @@ $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <?php if (isset($_SESSION['account_loggedin']) && $_SESSION['account_role'] == 'Admin'): ?>
     <div class="btns">
-        <a href="admin/ticket.php?id=<?=$_GET['id']?>" target="_blank" class="btn">Edit</a>
+        <a href="admin/ticket.php?id=<?=$_GET['id']?>" target="_self" class="btn">Edit</a>
         <a href="view.php?id=<?=$_GET['id']?>&status=resolved<?=$private_url?>" class="btn">Resolve</a>
         <a href="view.php?id=<?=$_GET['id']?>&status=closed<?=$private_url?>" class="btn red">Close</a>
     </div>
